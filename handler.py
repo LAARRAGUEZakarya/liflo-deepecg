@@ -76,12 +76,18 @@ def run_pipeline(npy_path, work_dir):
         "lvef_50_ecg_file_name":    "",
     }]).to_csv(manifest, index=False)
 
-    pre_df  = create_preprocessing_dataframe(
+    pre_result  = create_preprocessing_dataframe(
         str(manifest),
         list(DIAGNOSIS_TO_FILE_COLUMNS.keys()),
         str(data_dir)
     )
-    anal_df = create_analysis_dataframe(str(manifest))
+    anal_result = create_analysis_dataframe(str(manifest))
+
+    # Handle both string path and DataFrame return types
+    pre_df  = pd.read_csv(pre_result)  if isinstance(pre_result,  str) else pre_result
+    anal_df = pd.read_csv(anal_result) if isinstance(anal_result, str) else anal_result
+
+    print(f"[DeepECG] pre_df type: {type(pre_df)}, anal_df type: {type(anal_df)}")
 
     pipeline = AnalysisPipeline(
         preprocessing_df=pre_df,
