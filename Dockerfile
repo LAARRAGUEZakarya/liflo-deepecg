@@ -15,7 +15,8 @@ RUN pip install --upgrade pip && \
     pip install wfdb pydicom Pillow pandas numpy statsmodels scipy scikit-learn runpod
 
 RUN git clone https://github.com/HeartWise-AI/DeepECG_Docker /workspace/DeepECG_Docker && \
-    git clone https://github.com/HeartWise-AI/fairseq-signals /workspace/DeepECG_Docker/fairseq-signals
+    git clone https://github.com/HeartWise-AI/fairseq-signals /workspace/DeepECG_Docker/fairseq-signals && \
+    ln -s /workspace/DeepECG_Docker/fairseq-signals /fairseq-signals
 
 ENV PYTHONPATH=/workspace/DeepECG_Docker:/workspace/DeepECG_Docker/fairseq-signals
 ENV MPLBACKEND=Agg
